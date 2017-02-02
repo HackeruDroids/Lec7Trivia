@@ -69,8 +69,8 @@ public class QuestionsService {
     }
 
     public static String getPathForFile(String fileName) throws URISyntaxException {
-        String path = String.join("/", QuestionsService.class.getPackage().getName().split("\\."));
-        URL resource = QuestionsService.class.getClassLoader().getResource(path + "/" + fileName);
+        String packegeAsPath = String.join("/", QuestionsService.class.getPackage().getName().split("\\."));
+        URL resource = QuestionsService.class.getClassLoader().getResource(packegeAsPath + "/" + fileName);
         assert resource != null;
         return resource.getPath();
     }

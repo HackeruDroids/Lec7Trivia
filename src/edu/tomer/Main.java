@@ -8,7 +8,10 @@ public class Main {
     public static void main(String[] args) {
 
         ArrayList<Trivia> questions = QuestionsService.getQuestions();
+        //Questions are now taken from the question service... (File reader)
         System.out.println(questions);
+
+        game();
 
         Random r = new Random();
         int n = r.nextInt(10);//0-10 (Not including 10)
@@ -18,8 +21,8 @@ public class Main {
 
     }
 
-    void game() {
-        ArrayList<Trivia> questions = getQuestions();
+    static void game() {
+        ArrayList<Trivia> questions = QuestionsService.getQuestions();
 
         for (int i = 0; i < questions.size(); i++) {
             Trivia q = questions.get(i);
