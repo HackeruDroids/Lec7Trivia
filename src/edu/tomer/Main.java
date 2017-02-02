@@ -24,8 +24,7 @@ public class Main {
     static void game() {
         ArrayList<Trivia> questions = QuestionsService.getQuestions();
 
-        for (int i = 0; i < questions.size(); i++) {
-            Trivia q = questions.get(i);
+        for (Trivia q : questions) {
             q.show();
             q.showAnswers();
             int userAns = IO.getInt("Whats your answer?");
