@@ -16,6 +16,8 @@ public class IO {
 
     public static int getInt(String message){
         Scanner in = new Scanner(System.in);
+        if (!message.endsWith(":"))
+            message += ":";
         System.out.println(message);
         return in.nextInt();
     }
