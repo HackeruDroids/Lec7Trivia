@@ -1,5 +1,7 @@
 package edu.tomer;
 
+import java.util.Arrays;
+
 /**
  * Created by hackeru on 02/02/2017.
  */
@@ -25,6 +27,15 @@ public class Trivia {
         for (int i = 0; i < answers.length; i++) {
             System.out.printf("%d)  %s\n", i + 1, answers[i]);
         }
+    }
+
+    @Override
+    public String toString() {
+        return "Trivia{" +
+                "question='" + question + '\'' +
+                ", answers=" + Arrays.toString(answers) +
+                ", correctAnswer='" + correctAnswer + '\'' +
+                '}';
     }
 
     boolean check(int ans) {
