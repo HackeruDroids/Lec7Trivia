@@ -1,10 +1,16 @@
 package edu.tomer;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+import java.io.*;
+import java.lang.reflect.Type;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by hackeru on 02/02/2017.
@@ -26,21 +32,46 @@ public class QuestionsService {
         ArrayList<Trivia> triviaQuestions = new ArrayList<>();
         try {
             Gson gson = new Gson();
+            InputStreamReader reader = new FileReader(getPathForFile("json.json"));
+            Type type = new TypeToken<ArrayList<JsonTrivia>>() {
+            }.getType();
+            ArrayList<JsonTrivia> jsonQuestions = gson.fromJson(reader, type);
 
-            FileReader reader = new FileReader("C:\\Users\\hackeru\\Documents\\Tomer\\src\\edu\\tomer\\json.json");
-            ArrayList<JsonTrivia> jsonQuestions = gson.fromJson(reader, new ArrayList<JsonTrivia>().getClass());
-
-            for (int i = 0; i < jsonQuestions.size(); i++) {
-                JsonTrivia jQuestion = jsonQuestions.get(i);
+            for (JsonTrivia jQuestion : jsonQuestions) {
                 String question = jQuestion.question;
                 String[] answers = new String[]{jQuestion.A, jQuestion.B, jQuestion.C, jQuestion.D};
-                Trivia trivia = new Trivia(question, answers, jQuestion.answer);
+
+                String correctAnswer = jQuestion.answer;
+                switch (correctAnswer) {
+                    case "A":
+                        correctAnswer = answers[0];
+                        break;
+                    case "B":
+                        correctAnswer = answers[1];
+                        break;
+                    case "C":
+                        correctAnswer = answers[2];
+                        break;
+                    case "D":
+                        correctAnswer = answers[3];
+                        break;
+                }
+
+
+                Trivia trivia = new Trivia(question, answers, correctAnswer);
                 triviaQuestions.add(trivia);
             }
 
-        } catch (FileNotFoundException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return triviaQuestions;
+    }
+
+    public static String getPathForFile(String fileName) throws URISyntaxException {
+        String path = String.join("/", QuestionsService.class.getPackage().getName().split("\\."));
+        URL resource = QuestionsService.class.getClassLoader().getResource(path + "/" + fileName);
+        assert resource != null;
+        return resource.getPath();
     }
 }

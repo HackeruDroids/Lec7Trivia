@@ -7,9 +7,15 @@ public class Main {
 
     public static void main(String[] args) {
 
+        ArrayList<Trivia> questions = QuestionsService.getQuestions();
+        System.out.println(questions);
+
         Random r = new Random();
         int n = r.nextInt(10);//0-10 (Not including 10)
         System.out.println(n);
+
+
+
     }
 
     void game() {
